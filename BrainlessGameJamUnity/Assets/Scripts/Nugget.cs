@@ -25,10 +25,9 @@ public class Nugget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.L))
         {
-            ResetForce();
-            rb.AddForce(launchDir * launchForce, ForceMode2D.Impulse);
+            Launch(launchDir);
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
@@ -37,7 +36,13 @@ public class Nugget : MonoBehaviour
         }
     }
 
-    private void ResetForce()
+    public void Launch(Vector2 vec)
+    {
+        ResetForce();
+        rb.AddForce(vec.normalized * launchForce, ForceMode2D.Impulse);
+    }
+
+    void ResetForce()
     {
         // Clear linear and angular velocity
         rb.velocity = Vector2.zero;
@@ -48,7 +53,7 @@ public class Nugget : MonoBehaviour
         //rb.Sleep();
     }
 
-    private void ResetPosition()
+    void ResetPosition()
     {
         // Reset Z-rotation and position
         rb.rotation = 0;
