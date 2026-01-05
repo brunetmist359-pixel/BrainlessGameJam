@@ -24,19 +24,24 @@ public class Nugget : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ClearVelocity();
-
-            // FIXME should be framerate agnostic
-            rb.position = new Vector2(0, 0);
+            Reset();
             rb.AddForce(launchDir * launchForce, ForceMode2D.Impulse);
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reset();
         }
     }
     
-    private void ClearVelocity()
+    private void Reset()
     {
         // Clear linear and angular velocity
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0;
+
+        // Reset Z-rotation and position
+        rb.rotation = 0;
+        rb.position = new Vector2(0, 0);
         
         // Optional: Put the Rigidbody to sleep to prevent minor forces (like gravity over a single frame) 
         // from immediately affecting it again, ensuring it stays still until a new force is applied.
