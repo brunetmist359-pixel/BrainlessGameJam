@@ -59,4 +59,13 @@ public class Nugget : MonoBehaviour
         rb.rotation = 0;
         rb.position = startPosition;
     }
+
+        // Destroys veggies on contact
+    void OnTriggerEnter2D (Collider2D other)
+    {
+        if(other.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
 }

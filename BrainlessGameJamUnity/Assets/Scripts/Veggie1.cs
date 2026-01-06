@@ -42,15 +42,8 @@ public class Veggie1 : MonoBehaviour
         }
     }
 
-    // collision checks 
-    void OnTriggerEnter2D (Collider2D other)
-    {
-        if (other.CompareTag("Nugget"))
-        {
-            DestroySelf();
-        }
-                
-    }
+    
+    
 
     void DestroySelf()
     {
