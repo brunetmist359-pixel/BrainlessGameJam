@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    public GameObject Veggie1prefab;
+    // Allows other scripts to call functions on this script
+    public static WaveManager instance;
+
+
+    // List of variables to keep track of game state
+    public int wavecount;
+
+    // List of variables containing prefabs for enemies
+    public List<Enemy> EnemyTypes = new List<Enemy>();
 
     // Defining possible spawn locations
     public GameObject SpawnPoint1;
@@ -20,13 +28,17 @@ public class WaveManager : MonoBehaviour
     public List<GameObject> SpawnPoints = new List<GameObject>();
 
     
+    
  
-    // Assign SpawnPoints to list
+    // Assign SpawnPoints to list and initialize important variables
     void Awake()
     {
         SpawnPoints.Add(SpawnPoint1);
         SpawnPoints.Add(SpawnPoint2);
         SpawnPoints.Add(SpawnPoint3);
+        
+
+        wavecount = 1;
     }
 
     // Will eventually be in charge of calling and updating wavestate
@@ -34,12 +46,12 @@ public class WaveManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Spawn(Veggie1prefab);
+            StartCoroutine(StartWave(wavecount));
         }
     }
 
     // Spawns a veggie at a random spawn point every time its called
-    public void Spawn(GameObject enemytype)
+    public void Spawn(Enemy enemytype)
     {
         List<Transform> SelectedPath = TopPathNodes;
 
@@ -50,7 +62,41 @@ public class WaveManager : MonoBehaviour
         else if (randomindex == 1) SelectedPath = MiddlePathNodes;
         else if (randomindex == 2) SelectedPath = BottomPathNodes;
 
-        GameObject enemy = Instantiate(enemytype, spawnpoint.transform.position, Quaternion.identity);
+        Enemy enemy = Instantiate(enemytype, spawnpoint.transform.position, Quaternion.identity);
         enemy.GetComponent<Veggie1>().waypoints = SelectedPath;
+    }
+
+    // called at the start of each wave in order to spawn enemies
+    public IEnumerator StartWave(int wavecount)
+    {
+        int pointsallowed = (wavecount * 10);
+        
+
+        
+
+        while (pointsallowed > 0)
+        {
+            Enemy chosentype = ChooseEnemyType(pointsallowed);
+
+            if (chosentype == null) break;
+
+            Spawn(chosentype);
+            pointsallowed -= chosentype.PointRating;
+
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+    
+    // called by StartWave to determine the type of enemy spawned according to budget remaining
+    private Enemy ChooseEnemyType(int points)
+    {
+        int randomindex = Random.Range(0, EnemyTypes.Count);
+        Enemy chosenenenemy = EnemyTypes[randomindex];
+
+        if (chosenenenemy.PointRating <= points)
+        {
+            return chosenenenemy;
+        }
+        else return null;
     }
 }

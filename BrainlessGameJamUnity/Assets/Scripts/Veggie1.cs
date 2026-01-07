@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Veggie1 : MonoBehaviour
+public class Veggie1 : Enemy
 {
     // Defining Variables
     public float speed;
     private Rigidbody2D rb;
 
     public List<Transform> waypoints;
+
     
 
     // pathfinding variables
     private int CurrentMovePoint = 0;
+
+   
 
     // assigning object components to variable
     void Start()

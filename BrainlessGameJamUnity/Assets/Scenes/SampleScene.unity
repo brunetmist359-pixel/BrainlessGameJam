@@ -1673,7 +1673,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f56ca645044a5439978fad682a94e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Veggie1prefab: {fileID: 5824148121145178910, guid: 418bc4b61894704468d308196928fcd8, type: 3}
+  wavecount: 0
+  EnemyTypes:
+  - {fileID: 622569554697984086, guid: 418bc4b61894704468d308196928fcd8, type: 3}
   SpawnPoint1: {fileID: 56646918}
   SpawnPoint2: {fileID: 1961806970}
   SpawnPoint3: {fileID: 1110565558}
