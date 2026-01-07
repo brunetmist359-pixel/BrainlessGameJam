@@ -40,6 +40,7 @@ public class Veggie1 : Enemy
             CurrentMovePoint++;
             if (CurrentMovePoint >= waypoints.Count)
             {
+                WaveManager.Instance.PlayerHealth -= 1;
                 DestroySelf();
             }
         }

@@ -7,11 +7,17 @@ public class WaveManager : MonoBehaviour
     // Allows other scripts to call functions on this script
     public static WaveManager Instance;
 
+    //List of variables for player stats
+    public int PlayerHealth;
 
     // List of variables to keep track of game state
     public int WaveCount;
     public bool WaveInProgress;
     public int Enemycount;
+    public bool gameover;
+
+    // List of needed variables for UI
+    public GameObject gameoverPanel;
 
     // List of variables containing prefabs for enemies
     public List<Enemy> EnemyTypes = new List<Enemy>();
@@ -46,6 +52,10 @@ public class WaveManager : MonoBehaviour
             StartCoroutine(StartWave(WaveCount));
         }
         if (Enemycount > 0) WaveInProgress = true; else WaveInProgress = false;
+
+        if (PlayerHealth <= 0) GameOver();
+
+        if (gameover && Input.GetKeyDown(KeyCode.P)) RestartGame();
      
     }
 
@@ -121,7 +131,25 @@ public class WaveManager : MonoBehaviour
         SpawnPoints.Add(SpawnPoint2);
         SpawnPoints.Add(SpawnPoint3);
 
-
+        Enemycount = 0;
         WaveCount = 1;
+        PlayerHealth = 10;
+        WaveInProgress = false;
     }
+
+    public void GameOver()
+    {
+        gameover = true;
+        gameoverPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        gameoverPanel.SetActive(false);
+        Initialize();
+    }
+        
+
 }
