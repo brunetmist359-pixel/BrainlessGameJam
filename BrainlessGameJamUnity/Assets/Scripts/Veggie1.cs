@@ -5,7 +5,7 @@ using UnityEngine;
 public class Veggie1 : Enemy
 {
     // Defining Variables
-    public float speed;
+    
     private Rigidbody2D rb;
 
     public List<Transform> waypoints;
