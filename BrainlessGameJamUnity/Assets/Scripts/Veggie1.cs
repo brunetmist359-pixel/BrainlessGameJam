@@ -48,8 +48,5 @@ public class Veggie1 : Enemy
     
     
 
-    void DestroySelf()
-    {
-        Destroy(gameObject);
-    }
+    
 }

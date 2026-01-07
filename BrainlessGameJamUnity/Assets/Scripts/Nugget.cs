@@ -65,6 +65,7 @@ public class Nugget : MonoBehaviour
     {
         if(other.CompareTag("Enemy"))
         {
+            WaveManager.Instance.OnDeath();
             Destroy(other.gameObject);
         }
     }

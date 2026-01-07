@@ -6,4 +6,10 @@ public class Enemy : MonoBehaviour
 {
     public int PointRating;
     public float speed;
+
+    public void DestroySelf()
+    {
+        WaveManager.Instance.OnDeath();
+        Destroy(gameObject);
+    }
 }

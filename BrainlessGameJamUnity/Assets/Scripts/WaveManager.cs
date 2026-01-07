@@ -5,11 +5,13 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     // Allows other scripts to call functions on this script
-    public static WaveManager instance;
+    public static WaveManager Instance;
 
 
     // List of variables to keep track of game state
     public int WaveCount;
+    public bool WaveInProgress;
+    public int Enemycount;
 
     // List of variables containing prefabs for enemies
     public List<Enemy> EnemyTypes = new List<Enemy>();
@@ -39,11 +41,13 @@ public class WaveManager : MonoBehaviour
     // Will eventually be in charge of calling and updating wavestate
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && WaveInProgress == false)
         {
             StartCoroutine(StartWave(WaveCount));
         }
-        Debug.Log(WaveCount);
+        if (Enemycount > 0) WaveInProgress = true; else WaveInProgress = false;
+        Debug.Log(WaveInProgress);
+        Debug.Log(Enemycount);
     }
 
     // Spawns a veggie at a random spawn point every time its called
@@ -65,6 +69,7 @@ public class WaveManager : MonoBehaviour
     // called at the start of each wave in order to spawn enemies
     public IEnumerator StartWave(int wavecount)
     {
+        WaveInProgress = true;
         int pointsallowed = (wavecount * 10);
         WaveCount++;
 
@@ -76,12 +81,12 @@ public class WaveManager : MonoBehaviour
 
             if (chosentype == null)
             {
-                
                 break;
             }
                 
 
             Spawn(chosentype);
+            Enemycount++;
             pointsallowed -= chosentype.PointRating;
 
             yield return new WaitForSeconds(0.5f);
@@ -101,9 +106,18 @@ public class WaveManager : MonoBehaviour
         else return null;
     }
 
+    // for detecting and managing wave states
+    public void OnDeath()
+    {
+        Enemycount--;
+        Debug.Log("I WORKED");
+    }
+
     // defines startup conditions for awake and game resets.
     public void Initialize()
     {
+        Instance = this;
+
         SpawnPoints.Add(SpawnPoint1);
         SpawnPoints.Add(SpawnPoint2);
         SpawnPoints.Add(SpawnPoint3);
