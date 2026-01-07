@@ -137,6 +137,7 @@ public class WaveManager : MonoBehaviour
         WaveInProgress = false;
     }
 
+    // Called to initiate GameOver
     public void GameOver()
     {
         gameover = true;
@@ -144,6 +145,7 @@ public class WaveManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    // Called to restart the game
     public void RestartGame()
     {
         Time.timeScale = 1f;
