@@ -46,8 +46,7 @@ public class WaveManager : MonoBehaviour
             StartCoroutine(StartWave(WaveCount));
         }
         if (Enemycount > 0) WaveInProgress = true; else WaveInProgress = false;
-        Debug.Log(WaveInProgress);
-        Debug.Log(Enemycount);
+     
     }
 
     // Spawns a veggie at a random spawn point every time its called
@@ -110,7 +109,7 @@ public class WaveManager : MonoBehaviour
     public void OnDeath()
     {
         Enemycount--;
-        Debug.Log("I WORKED");
+        
     }
 
     // defines startup conditions for awake and game resets.
