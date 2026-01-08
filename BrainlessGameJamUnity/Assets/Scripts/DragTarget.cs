@@ -23,12 +23,16 @@ public class DragTarget : MonoBehaviour
 
     void OnMouseDown()
     {
+        LaunchVisualizer.StartVisualization(nugget.gameObject);
+
         dragStartPos = Input.mousePosition;
         dragDelta = Vector3.zero;
     }
 
     void OnMouseUp()
     {
+        LaunchVisualizer.StopVisualization(nugget.gameObject);
+
         if (dragDelta.magnitude > 0) {
             nugget.Launch(dragDelta);
         }
@@ -37,6 +41,9 @@ public class DragTarget : MonoBehaviour
     void OnMouseDrag()
     {
         dragDelta = dragStartPos - Input.mousePosition;
-        //Debug.Log($"drag delta: {dragDelta.x} {dragDelta.y}.");
+
+        LaunchVisualizer.DrawVisualization(
+            nugget.gameObject,
+            nugget.GetLaunchVec(dragDelta));
     }
 }

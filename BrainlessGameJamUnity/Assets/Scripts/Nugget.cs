@@ -39,17 +39,22 @@ public class Nugget : MonoBehaviour
         }
     }
 
-    public void Launch(Vector2 vec)
+    public Vector3 GetLaunchVec(Vector3 vec)
+    {
+        float force = Math.Min(vec.magnitude * launchMultiplier, maxLaunchForce);
+        return vec.normalized * force;
+    }
+
+    public void Launch(Vector3 vec)
     {
         ResetForce();
-        float force = Math.Min(vec.magnitude * launchMultiplier, maxLaunchForce);
-        rb.AddForce(vec.normalized * force);
+        rb.AddForce(GetLaunchVec(vec));
     }
 
     void ResetForce()
     {
         // Clear linear and angular velocity
-        rb.velocity = Vector2.zero;
+        rb.velocity = Vector3.zero;
         rb.angularVelocity = 0;
 
         // Optional: Put the Rigidbody to sleep to prevent minor forces (like gravity over a single frame) 
