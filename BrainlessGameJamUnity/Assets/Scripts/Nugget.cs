@@ -43,7 +43,7 @@ public class Nugget : MonoBehaviour
     {
         ResetForce();
         float force = Math.Min(vec.magnitude * launchMultiplier, maxLaunchForce);
-        rb.AddForce(vec.normalized * force, ForceMode2D.Impulse);
+        rb.AddForce(vec.normalized * force);
     }
 
     void ResetForce()
