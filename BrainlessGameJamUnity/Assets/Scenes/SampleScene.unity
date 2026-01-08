@@ -1898,8 +1898,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 1}
-  launchForce: 13
   launchDir: {x: 1, y: 1}
+  launchMultiplier: 0.05
+  maxLaunchForce: 15
 --- !u!212 &2137253019
 SpriteRenderer:
   m_ObjectHideFlags: 0

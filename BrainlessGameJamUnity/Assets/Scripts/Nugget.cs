@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Nugget : MonoBehaviour
@@ -7,8 +8,10 @@ public class Nugget : MonoBehaviour
     private Rigidbody2D rb;
 
     public Vector2 startPosition;
-    public float launchForce;
     public Vector2 launchDir;
+
+    public float launchMultiplier;
+    public float maxLaunchForce;
 
     void Awake()
     {
@@ -39,7 +42,8 @@ public class Nugget : MonoBehaviour
     public void Launch(Vector2 vec)
     {
         ResetForce();
-        rb.AddForce(vec.normalized * launchForce, ForceMode2D.Impulse);
+        float force = Math.Min(vec.magnitude * launchMultiplier, maxLaunchForce);
+        rb.AddForce(vec.normalized * force, ForceMode2D.Impulse);
     }
 
     void ResetForce()
